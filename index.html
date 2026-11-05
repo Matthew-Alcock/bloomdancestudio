@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloom Dance Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+@font-face {
+  font-family: 'BrittanySignature';
+  src: url('fonts/BrittanySignature.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* ── TOKENS ── */
+:root {
+  --cherry:      #670626;
+  --apple-red:   #8B0000;
+  --coral:       #E87A5D;
+  --magenta:     #9B4D8C;
+  --ballet-pink: #F5B5C8;
+  --olive:       #7A8B3D;
+  --matcha:      #BAD797;
+  --teal:        #006B3C;
+  --charcoal:    #2C1E20;
+  --bark:        #4A2E28;
+  --cream:       #FAF6F0;
+  --parchment:   #F3EDE4;
+  --gold:        #C4923A;
+
+  --font-script:  'BrittanySignature', cursive;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Open Sans', system-ui, sans-serif;
+
+  --sh-card:  0 4px 28px rgba(44,30,32,0.12);
+  --sh-float: 0 10px 48px rgba(44,30,32,0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--charcoal);
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════════════
+   NAV — hidden until scrolled
+══════════════════════════════════════ */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 68px;
+  background: linear-gradient(rgba(139, 0, 0, 0.4), rgba(139, 0, 0, 0.4)), #ffffff;
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(74,46,40,0.10);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.23,1,0.32,1),
+              opacity 0.35s ease;
+  pointer-events: none;
+}
+.site-nav.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+.nav-logo img {
+  height: 60px;
+  display: block;
+  filter: drop-shadow(0 1px 2px rgba(255,255,255,0.35)) drop-shadow(0 2px 4px rgba(255,255,255,0.20));
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links > li { position: relative; }
+.nav-links a {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #670626;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover,
+.nav-links a.active { color: #ffffff; }
+.nav-cta {
+  background: var(--cherry);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 26px;
+  border-radius: 999px;
+  border: 2px solid var(--cherry);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.nav-cta:hover { background: white; color: var(--cherry); transform: translateY(-1px); }
+
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:6px;width:44px;height:44px;padding:10px;background:none;border:none;cursor:pointer}
+.nav-burger span{display:block;height:2.5px;width:100%;background:#670626;border-radius:2px;transition:transform .25s ease,opacity .2s ease}
+.nav-burger.open span:nth-child(1){transform:translateY(8.5px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-8.5px) rotate(-45deg)}
+.mobile-menu{position:fixed;top:68px;left:0;right:0;z-index:199;display:flex;flex-direction:column;padding:8px 24px 24px;background:linear-gradient(rgba(139,0,0,0.4),rgba(139,0,0,0.4)),#ffffff;box-shadow:0 12px 24px rgba(44,30,32,0.15);transform:translateY(-12px);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .25s ease}
+.mobile-menu.open{opacity:1;transform:none;pointer-events:all}
+.mobile-menu a{display:block;padding:14px 0;font-size:14px;font-weight:800;letter-spacing:.08em;color:#670626;text-decoration:none;border-bottom:1px solid rgba(103,6,38,0.15)}
+.mobile-menu a:hover{color:#ffffff}
+.mobile-menu .mobile-cta{margin-top:18px;text-align:center;background:var(--cherry);color:#ffffff;border-radius:999px;border:none;padding:14px 0}
+@media (min-width:769px){.mobile-menu{display:none}}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 60px 40px 80px;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('assets/watercolor-hero-bg.jpg') left bottom/cover no-repeat;
+  z-index: 0;
+}
+.hero-bg::after {
+  content: none;
+}
+.hero-contact-bar {
+  position: absolute;
+  top: 22px; right: 36px;
+  z-index: 2;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.hero-contact-bar a {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+  transition: opacity 0.2s;
+}
+.hero-contact-bar a:hover { opacity: 0.75; }
+.hero-contact-bar span { color: rgba(255,255,255,0.4); font-size: 9px; }
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.hero-welcome {
+  font-family: var(--font-script);
+  font-size: 162px;
+  color: white;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.3);
+  line-height: 1;
+  margin-bottom: -8px;
+  align-self: center;
+  transform: translateX(-50px);
+}
+.hero-logo {
+  width: 640px;
+  max-width: 98vw;
+  margin: 0 auto;
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.22));
+}
+.hero-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.hero-subtitle {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: white;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+  margin-bottom: 16px;
+}
+.hero-btns {
+  display: flex;
+  gap: 14px;
+  margin-top: 12px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 13px 32px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--sh-float); }
+.btn-primary { background: var(--cherry); color: white; }
+.btn-primary:hover { background: var(--apple-red); }
+.btn-white-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.85); }
+.btn-white-outline:hover { background: rgba(255,255,255,0.14); }
+.btn-teal { background: var(--teal); color: white; }
+.btn-teal:hover { background: var(--olive); }
+.btn-outline { background: transparent; color: var(--cherry); border: 2px solid var(--cherry); }
+.btn-outline:hover { background: rgba(103,6,38,0.06); }
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: bounceDown 2s ease-in-out infinite;
+}
+.hero-scroll-hint span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.scroll-arrow {
+  width: 18px; height: 18px;
+  border-right: 2px solid rgba(255,255,255,0.7);
+  border-bottom: 2px solid rgba(255,255,255,0.7);
+  transform: rotate(45deg);
+}
+@keyframes bounceDown {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.8; }
+  50% { transform: translateX(-50%) translateY(7px); opacity: 1; }
+}
+
+/* ══════════════════════════════════════
+   CLASSES SECTION
+══════════════════════════════════════ */
+.classes-section {
+  position: relative;
+  overflow: hidden;
+  background: #FAF6F0;
+}
+.classes-bg {
+  display: none;
+}
+.classes-bg::after {
+  content: none;
+}
+.classes-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 96px 40px;
+  text-align: center;
+}
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+.section-script-title {
+  font-family: var(--font-script);
+  font-size: 72px;
+  color: var(--charcoal);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.section-intro {
+  font-size: 16px;
+  color: var(--bark);
+  line-height: 1.75;
+  max-width: 520px;
+  margin: 0 auto 56px;
+  font-family: var(--font-display);
+  font-style: normal;
+}
+
+/* Classes bubbles row — centered logo + 4 class circles */
+.classes-bubbles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.classes-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.class-bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+}
+.class-bubble-img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 18px 32px rgba(44,30,32,0.28),
+    0 6px 14px rgba(44,30,32,0.18),
+    var(--sh-card);
+  border: none;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+}
+.class-bubble-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.class-bubble-img img.flip-h { transform: scaleX(-1); }
+.class-bubble:hover .class-bubble-img img.flip-h { transform: scaleX(-1) scale(1.06); }
+.class-bubble:hover .class-bubble-img {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: var(--sh-float);
+}
+.class-bubble:hover .class-bubble-img img {
+  transform: scale(1.06);
+}
+/* Center logo bubble — larger */
+.class-bubble.center-logo .class-bubble-img {
+  width: 220px;
+  height: 220px;
+  border: none;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  overflow: visible;
+}
+.class-bubble.center-logo .class-bubble-img img {
+  object-fit: contain;
+  padding: 24px;
+}
+.class-bubble-name {
+  font-family: var(--font-script);
+  font-size: 28px;
+  color: var(--charcoal);
+  line-height: 1.8;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.7);
+}
+.class-bubble-age {
+  display: none;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--olive);
+  text-align: center;
+  margin-top: -8px;
+}
+.class-bubble-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-top: -6px;
+}
+
+/* ══════════════════════════════════════
+   ABOUT / OUR STORY
+══════════════════════════════════════ */
+.about-section {
+  background: var(--cream);
+  position: relative;
+}
+.about-section,
+.about-section .section-eyebrow,
+.about-section .section-script-title,
+.about-section .about-body,
+.about-section .about-signature { color: #670626; }
+.about-inner { position: relative; z-index: 1; }
+.about-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.about-img-col {
+  position: relative;
+}
+.about-watercolor-blob {
+  position: absolute;
+  inset: -32px;
+  background: url('assets/watercolor-pink.jpg') center/cover no-repeat;
+  border-radius: 50% 40% 60% 50% / 50% 60% 40% 50%;
+  opacity: 0.38;
+  z-index: 0;
+}
+.about-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: block;
+  filter: drop-shadow(0 18px 40px rgba(0,0,0,0.18));
+}
+.about-text-col .section-eyebrow { text-align: left; }
+.about-text-col .section-script-title {
+  text-align: left;
+  font-size: 62px;
+  color: var(--cherry);
+  margin-bottom: 28px;
+}
+.about-body {
+  font-size: 15px;
+  color: var(--bark);
+  line-height: 1.85;
+  margin-bottom: 20px;
+  text-wrap: pretty;
+}
+.about-signature {
+  font-family: var(--font-script);
+  font-size: 46px;
+  color: var(--magenta);
+  line-height: 1;
+  margin: 20px 0 28px;
+}
+
+/* ══════════════════════════════════════
+   FULL-BLEED DANCER DIVIDER
+══════════════════════════════════════ */
+.dancer-divider {
+  position: relative;
+  aspect-ratio: 2730 / 1027;
+  height: auto;
+  overflow: hidden;
+}
+.dancer-divider-bg {
+  position: absolute; inset: 0;
+  background: url('assets/quote-banner-v2.jpg') center center/cover no-repeat #FAF6F0;
+}
+.dancer-divider-bg::after {
+  content: none;
+}
+.dancer-divider-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+}
+.dancer-divider-quote {
+  position: absolute;
+  left: 29%;
+  top: 40px;
+  width: 19%;
+}
+.divider-quote-text {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.45vw, 22px);
+  font-style: italic;
+  color: #F2BBD6;
+  line-height: 1.45;
+  text-shadow: 0 2px 16px rgba(40,8,28,0.45), 0 0 24px rgba(103,6,38,0.25);
+  margin-bottom: 20px;
+}
+.divider-quote-attr {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+}
+
+/* ══════════════════════════════════════
+   TEACHING TEAM
+══════════════════════════════════════ */
+.team-section {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: #FAF6F0;
+}
+.team-section-bg {
+  display: none;
+}
+.team-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 72px;
+  align-items: start;
+}
+.team-heading-col {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.team-heading-col .section-eyebrow {
+  color: #670626;
+  font-weight: 800;
+}
+.team-script {
+  font-family: var(--font-script);
+  font-size: 72px;
+  color: #670626;
+  font-weight: 400;
+  line-height: 1.18;
+  margin-bottom: 0;
+}
+.team-heading-desc {
+  font-size: 15px;
+  color: #670626;
+  font-weight: 700;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+#classes .teacher-row-name{line-height:1.35}
+#team .teacher-row-name{line-height:1.35;margin-bottom:10px}
+#classes .teacher-row .class-bubble-badge{margin-top:10px;margin-bottom:12px}
+.team-cards-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.teacher-row {
+  background: white;
+  border-radius: 20px;
+  padding: 36px 32px;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 28px;
+  align-items: center;
+  overflow: visible;
+  box-shadow: 0 2px 16px rgba(44,30,32,0.07);
+  border-left: 4px solid #D19999;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+}
+.teacher-row:hover {
+  transform: translateX(6px);
+  box-shadow: var(--sh-card);
+}
+.teacher-row-photo {
+  width: 180px;
+  height: 180px;
+  margin-left: -30px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  border: none;
+  box-shadow:
+    0 18px 32px rgba(44,30,32,0.22),
+    0 6px 14px rgba(44,30,32,0.14);
+}
+.teacher-row-name {
+  font-family: var(--font-script);
+  font-size: 40px;
+  color: #670626;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.teacher-row-role {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 8px;
+}
+.teacher-row-bio {
+  font-size: 13px;
+  color: #670626;
+  line-height: 1.65;
+}
+
+/* ══════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════ */
+.testimonials-section {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  background: #FAF6F0;
+}
+.testimonials-bg {
+  display: none;
+}
+.testimonials-bg::after {
+  content: none;
+}
+.testimonials-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 40px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 72px;
+  align-items: start;
+}
+.testimonials-heading-col {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.testimonials-script {
+  font-family: var(--font-script);
+  font-size: 72px;
+  color: var(--cherry);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  word-spacing: 0.12em;
+  margin-bottom: 0;
+}
+.testimonials-sub {
+  font-size: 14px;
+  color: #670626;
+  line-height: 1.7;
+}
+.testimonials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.testimonial-card {
+  background: white;
+  border-radius: 20px;
+  padding: 36px 32px;
+  position: relative;
+  box-shadow: 0 2px 16px rgba(44,30,32,0.07);
+  border-left: 4px solid #D19999;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+}
+.testimonial-card:hover {
+  transform: translateX(6px);
+  box-shadow: var(--sh-card);
+}
+.testimonial-mark {
+  font-family: var(--font-display);
+  font-size: 72px;
+  color: var(--ballet-pink);
+  position: absolute;
+  top: 10px; left: 22px;
+  line-height: 1;
+  pointer-events: none;
+}
+.testimonial-text {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-style: italic;
+  color: #670626;
+  line-height: 1.78;
+  padding-top: 32px;
+  margin-bottom: 18px;
+  text-wrap: pretty;
+}
+.testimonial-text + .testimonial-text { padding-top: 0; }
+.testimonial-author {
+  font-size: 12px;
+  font-weight: 700;
+  color: #670626;
+  letter-spacing: 0.04em;
+}
+
+.venues-section{position:relative;z-index:1;background:#FAF6F0}
+.venues-inner{max-width:1100px;margin:0 auto;padding:100px 40px}
+.venues-section .section-eyebrow,.venues-section .section-script-title{color:#670626;text-align:left}
+.venues-section .section-eyebrow{margin-bottom:22px}
+.venues-section .section-script-title{line-height:1.2;margin-bottom:24px}
+.venue-group-title{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#670626;margin:36px 0 14px}
+.venues-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.venue-card{display:flex;align-items:flex-start;gap:14px;text-align:left;background:white;border:1px solid transparent;border-left:4px solid #D19999;border-radius:16px;padding:18px 20px;box-shadow:0 2px 16px rgba(44,30,32,0.07);cursor:pointer;font:inherit;transition:transform .2s,box-shadow .2s,border-color .2s,background .2s}
+.venue-card:hover{transform:translateY(-2px);box-shadow:var(--sh-card)}
+.venue-card.active{background:#FBEFEF;border-color:#D19999}
+.venue-num{flex:none;width:28px;height:28px;border-radius:50%;background:#670626;color:#FAF6F0;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.venue-pre .venue-num{background:var(--olive)}
+.venue-text{display:flex;flex-direction:column;gap:4px}
+.venue-name{font-family:var(--font-display);font-size:16px;font-weight:600;color:#670626;line-height:1.3}
+.venue-addr{font-size:12.5px;color:#670626;opacity:.8;line-height:1.5}
+.venues-map{margin-top:40px;height:440px;border-radius:20px;overflow:hidden;box-shadow:0 2px 16px rgba(44,30,32,0.07);background:#eee}
+.venue-pin span{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 12px var(--font-body);color:#FAF6F0;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.venue-pin-studio span{background:#670626}
+.venue-pin-pre span{background:var(--olive)}
+@media (max-width:900px){.venues-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.venues-grid{grid-template-columns:1fr}.venues-inner{padding:72px 20px}.venues-map{height:340px}}
+
+/* ══════════════════════════════════════
+   ENROL / CTA
+══════════════════════════════════════ */
+.cta-section {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.cta-bg {
+  position: absolute; inset: 0;
+  background: url('assets/watercolor-cta-bg.jpg') center/cover no-repeat;
+}
+.cta-bg::after {
+  content: none;
+}
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  padding: 120px 40px;
+}
+.cta-script {
+  font-family: var(--font-script);
+  font-size: 100px;
+  color: white;
+  line-height: 1;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  margin-bottom: 18px;
+}
+.cta-tagline {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-style: italic;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 44px;
+}
+.cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-lg { font-size: 15px; padding: 15px 44px; }
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  background: #FAF6F0;
+  color: var(--charcoal);
+  position: relative;
+  z-index: 1;
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 72px 40px 40px;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 72px;
+  margin-bottom: 0;
+}
+.footer-brand{justify-self:end;text-align:right}.footer-brand .footer-logo-img{margin-left:auto}
+.footer-logo-img {
+  height: 110px;
+  display: block;
+  margin: -8px 0 18px -8px;
+}
+.footer-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: #670626;
+  margin-bottom: 16px;
+}
+.footer-desc {
+  font-size: 13px;
+  color: #670626;
+  line-height: 1.75;
+}
+.footer-col-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #670626;
+  margin-bottom: 22px;
+}
+.footer-links {
+  list-style: none;
+}
+.footer-links li {
+  font-size: 13px;
+  color: #670626;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.footer-links li:hover { color: #8B0000; }
+.footer-links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: #8B0000; }
+.footer-bottom {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px 32px;
+  border-top: 1px solid rgba(44,30,32,0.10);
+  padding-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-copy {
+  font-size: 12px;
+  color: #670626;
+}
+.footer-socials {
+  display: flex;
+  gap: 12px;
+}
+.footer-socials a {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--cherry);
+  color: #FAF6F0;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.footer-socials a:hover {
+  background: var(--apple-red);
+  transform: translateY(-2px);
+}
+
+/* ══════════════════════════════════════
+   ANIMATIONS — fade in on scroll
+══════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 960px) {
+  .about-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 72px 32px;
+  }
+  .about-img-col { max-width: 460px; margin: 0 auto; }
+  .team-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 72px 32px;
+  }
+  .team-heading-col { position: static; }
+  .team-script { font-size: 64px; }
+  .testimonials-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 72px 32px;
+  }
+  .testimonials-heading-col { position: static; }
+  .testimonials-script { font-size: 64px; }
+  .section-script-title { font-size: 56px; }
+  .cta-script { font-size: 72px; }
+}
+@media (max-width: 768px) {
+  .site-nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .site-nav .nav-cta { display: none; }
+  .nav-logo img { height: 48px; }
+  .nav-burger { display: flex; }
+  .hero-contact-bar { display: none; }
+  .classes-bubbles { gap: 14px; }
+  .class-bubble-img { width: 140px; height: 140px; }
+  .class-bubble.center-logo .class-bubble-img { width: 165px; height: 165px; }
+  .class-bubble-name { font-size: 26px; }
+  .dancer-divider { height: auto; }
+  .dancer-divider-content { padding: 0; }
+  .divider-quote-text { font-size: clamp(12px, 1.8vw, 18px); }
+  .teacher-row { grid-template-columns: 110px 1fr; gap: 16px; }
+  .teacher-row-photo { width: 140px; height: 140px; margin-left: -22px; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .cta-script { font-size: 56px; }
+}
+@media (max-width: 480px) {
+  .classes-bubbles { gap: 10px; }
+  .class-bubble-img { width: 110px; height: 110px; }
+  .class-bubble.center-logo .class-bubble-img { width: 130px; height: 130px; }
+  .hero-logo { width: 320px; }
+  .hero-welcome { font-size: 78px; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+/* ── Tweaks texture variable ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: url('assets/watercolor-hero-bg.jpg') center/cover no-repeat;
+  opacity: var(--texture-opacity, 0.10);
+  pointer-events: none;
+  z-index: 0;
+}
+</style>
+
+<!-- React + Babel -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="bloom-tweaks.jsx"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#670626"/><text x="50" y="62" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="34" fill="#FAF6F0">B</text></svg></template>
+</head>
+<body>
+
+<!-- ═══ NAV (hidden until scroll) ═══ -->
+<nav class="site-nav" id="siteNav">
+  <a class="nav-logo" href="#top">
+    <img src="assets/cherry-logo-transparent.png" alt="Bloom Dance Studio">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#classes">Our Classes</a></li>
+    <li><a href="#team">OUR TEACHING TEAM</a></li>
+    <li><a href="#testimonials">WHAT PEOPLE SAY</a></li>
+    <li><a href="#venues">VENUES</a></li>
+  </ul>
+  <a class="nav-cta" href="https://wa.me/27829099079?text=Hi%20Bloom%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class" target="_blank" rel="noopener">Book a free trial</a>
+  <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">ABOUT US</a>
+  <a href="#classes">OUR CLASSES</a>
+  <a href="#team">OUR TEACHING TEAM</a>
+  <a href="#testimonials">WHAT PEOPLE SAY</a>
+  <a href="#venues">VENUES</a>
+  <a class="mobile-cta" href="https://wa.me/27829099079?text=Hi%20Bloom%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class" target="_blank" rel="noopener">Book a free trial</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-contact-bar">
+    <a href="tel:+27829099079">
+</a>
+    <span>·</span>
+
+  </div>
+  <div class="hero-content">
+    <div class="hero-welcome" style="font-family: var(--font-script); font-style: normal; font-size: 60px">Welcome to</div>
+    <div class="hero-logo">
+      <img src="assets/bloom-logo-pdf-transparent.png" alt="Bloom Dance Studio">
+    </div>
+  
+    <div class="hero-btns">
+      <a class="btn btn-white-outline btn-lg" href="#classes">View classes</a>
+      <a class="btn btn-white-outline btn-lg" href="#about">About Us</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT / OUR STORY ═══ -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-img-col reveal">
+      <img class="about-img" src="assets/bloom-icon.png" alt="Bloom Dance Studio illustration">
+    </div>
+    <div class="about-text-col reveal reveal-delay-1">
+      <div class="section-eyebrow">About Us</div>
+      <div class="section-script-title" style="font-size:62px; color:var(--cherry); font-family: var(--font-script); font-style: normal; font-weight: normal;"><span style="font-size: 46px; font-style: italic;">Where every dancer blooms.</span></div>
+      <div class="about-body"><p dir="ltr">At <b>Bloom Dance Studio</b> we offer a lifelong dance education, from childhood through adolescence into adulthood. The journey begins with a simple intention: to create an environment where dancers fall in love with dance. The love of dance is what draws them back through the studio door, week after week, year after year. Over time, discipline and devotion deepen, technical excellence takes root, and every dancer has the opportunity to flourish.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLASSES ═══ -->
+<section class="classes-section" id="classes">
+  <div class="team-inner">
+    <div class="team-heading-col reveal">
+      <div class="section-eyebrow">What we offer</div>
+      <div class="team-script">Classes for all</div>
+    </div>
+    <div class="team-cards-col">
+      <div class="teacher-row reveal reveal-delay-1">
+        <img class="teacher-row-photo" src="assets/mini-and-me-new.jpg" alt="Mini & Me" style="object-position: 52% 60%;">
+        <div>
+          <div class="teacher-row-name" style="color: #670626;">Mini &amp; Me</div>
+          <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">18 MONTHS TO 3 YEARS OLD</span>
+          <p class="teacher-row-bio" style="color: #670626;">This is a gentle first step into dance class that is shared with a parent, guardian or loved one. Through creative play, you explore musicality and the basic foundations of dance with your little one. A time to bond, be a bit silly, and most importantly, encourage their budding love of dance.</p>
+        </div>
+      </div>
+      <div class="teacher-row reveal reveal-delay-2">
+        <img class="teacher-row-photo" src="assets/little-blooms-circle.jpg" alt="Little Blooms" style="object-position: 50% 46%;">
+        <div>
+          <div class="teacher-row-name" style="color: #670626;">Little Blooms</div>
+          <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">From 2- 5 years old</span>
+          <p class="teacher-row-bio" style="color: #670626;">Inspired by the RAD <b>Dance to Your Own Tune</b> framework, these classes use imaginative storytelling to build vital social and physical skills. Children develop motor control, balance, coordination, and spatial awareness while learning to interpret rhythm and tempo. Prioritising creative physical discovery over rigid form to start, these classes forms a solid base for all future dance training.</p>
+        </div>
+      </div>
+      <div class="teacher-row reveal reveal-delay-3">
+        <img class="teacher-row-photo" src="assets/ballet-circle.jpg" alt="Ballet" style="object-position: 50% 52%;">
+        <div>
+          <div class="teacher-row-name" style="color: #670626;">Ballet</div>
+          <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">RAD Pre-Primary to Advanced 2</span>
+          <p class="teacher-row-bio" style="color: #670626;">Our ballet classes follow the <b>Royal Academy of Dance</b> syllabus, a internationally recognised curriculum that has set the standard for classical training for over a century. With a focus is on building confidence, technical artistry and performance quality, we follow a pace that suits each dancer while giving them opportunity to take part in assessments as well as festivals, competitions and shows .</p>
+        </div>
+      </div>
+      <div class="teacher-row reveal reveal-delay-4">
+        <img class="teacher-row-photo" src="assets/contemporary-circle.jpg" alt="Contemporary" style="object-position: 50% 52%;">
+        <div>
+          <div class="teacher-row-name" style="color: #670626;">Contemporary</div>
+          <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">Children and Adults</span>
+          <p class="teacher-row-bio" style="color: #670626;">A natural partner to ballet, contemporary dance is expressive, grounded and versatile. Classes explore floor work, release and momentum, the use of breath and weight, all building strength and fluidity while giving each dancer room to find their own way of moving. Those who wish can perform contemporary work at festivals, competitions and concerts.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FULL-BLEED DANCER DIVIDER ═══ -->
+<div class="dancer-divider">
+  <div class="dancer-divider-bg" style="opacity: 1"></div>
+  <div class="dancer-divider-content">
+    <div class="dancer-divider-quote reveal" style="display:none">
+      <div class="divider-quote-text" style="color: rgb(139, 0, 0)">A dancer, like a flower, does not bloom in a moment but through determination, constant reaching for light.</div>
+      <div class="divider-quote-attr"><span style="color: #8b0000;">- BLOOM DANCE STUDIO 2026</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TEACHING TEAM ═══ -->
+<section class="team-section" id="team">
+  <div class="team-section-bg"></div>
+  <div class="team-inner">
+    <div class="team-heading-col reveal">
+      <div class="section-eyebrow">The people behind the magic</div>
+      <div class="team-script">Teaching Team</div>
+    </div>
+    <div class="team-cards-col">
+      <div class="teacher-row reveal reveal-delay-1">
+        <img class="teacher-row-photo" src="assets/teacher-kim.jpg" alt="Kim" style="object-position: 28% 32%; transform: scaleX(-1);">
+        <div>
+          <div class="teacher-row-name">Kim Taylor</div>
+          <div class="teacher-row-role"></div>
+          <p class="teacher-row-bio">As founder and studio principal since 2018, Kim serves as your primary contact. Bringing a strong academic and creative streak, she pairs qualifications in RAD Ballet and AIDT Modern dance with a Rhodes University background in physical theatre, psychology, and marketing. Her teaching philosophy centers on play, prioritising creativity, musicality and body positivity from an early age.</p>
+        </div>
+      </div>
+      <div class="teacher-row reveal reveal-delay-2">
+        <img class="teacher-row-photo" src="assets/teacher-ipeleng.jpg" alt="Ipeleng" style="object-position: 50% 32%; transform: scaleX(-1);">
+        <div>
+          <div class="teacher-row-name">Ipeleng Derby</div>
+          <div class="teacher-row-role"></div>
+          <p class="teacher-row-bio">Ipeleng joined the studio in 2020, teaching ballet and contemporary for all ages across multiple venues. A graduate of the Cape Academy of Performing Arts, she has toured globally with the Cape Dance Company and Dada Masilo, and sits on the board of Cape Ballet Africa. Qualified in RAD Ballet and completing her Pilates certification, she pairs elite performance experience with an warm and encouraging teaching style.</p>
+        </div>
+      </div>
+      <div class="teacher-row reveal reveal-delay-3">
+        <img class="teacher-row-photo" src="assets/teacher-joanne.jpg" alt="Joanne" style="object-position: 38% 42%;">
+        <div>
+          <div class="teacher-row-name">Joanne Dieckmann</div>
+          <div class="teacher-row-role"></div>
+          <p class="teacher-row-bio">Joanne joined the studio in 2020, bringing more than three decades of dance education experience to the team. Mentored by Yvonne Adkins (ARAD) of the Royal Ballet School, she has taught the full RAD syllabus from Pre-Primary through Advanced 2 since 1987, alongside credentials in the Vaganova-based BC programme and AIDT Modern. Recipient of the AAB Performance Award for 25 years of service, her work centres on senior students, balancing technical discipline and helping dancers discover their artistic voice.</p>
+        </div>
+      </div>
+      <div class="teacher-row reveal reveal-delay-4">
+        <img class="teacher-row-photo" src="assets/teacher-pascale.jpg" alt="Pascale" style="object-position: 65% 45%;">
+        <div>
+          <div class="teacher-row-name">Pascale Verolini</div>
+          <div class="teacher-row-role"></div>
+          <p class="teacher-row-bio">Pascale joined the team in 2026, and while she serves as a locum RAD teacher, her primary focus is studio administrative support. Backed by international teaching experience across South Africa and the UAE, and Southdown's College Dance Honours training, she brings firsthand syllabus knowledge and dancer-led insight to our day-to-day operations.</p>
+        </div>
+      </div>
+      <div class="teacher-row reveal reveal-delay-4">
+        <img class="teacher-row-photo" src="assets/teacher-rorisang.jpg" alt="Rorisang Motuba" style="object-position: 35% 40%;">
+        <div>
+          <div class="teacher-row-name">Rorisang Motuba</div>
+          <div class="teacher-row-role"></div>
+          <p class="teacher-row-bio">Rorisang joined the team in 2026 to lead children’s creative movement across our partner preschools. A lifelong friend of Kim, she is a formally trained actor, writer, and director who studied at UCT, graduated <i>magna cum laude</i> from the New York Film Academy, and trained at the Baron/Brown Studio. Drawing on lead roles at the Market Theatre, she brings professional expertise in spatial awareness, physical expression, and storytelling to young performers.</p>
+        </div>
+      </div>
+      <div class="teacher-row reveal reveal-delay-4">
+        <img class="teacher-row-photo" src="assets/teacher-tamlyn-hq.jpg" alt="Tamlyn" style="object-position: center;">
+        <div>
+          <div class="teacher-row-name">Tamlyn Preston</div>
+          <div class="teacher-row-role"></div>
+          <p class="teacher-row-bio">Joining the studio in 2026, Tamlyn began her training in Johannesburg before heading to the UK to study at KS Dance and performing across Europe with Étoile Ballet Theatre in Italy and EBB Junior Ballet in France. Holder of the Enrico Cecchetti Final Diploma and an ISTD Diploma in Dance Education, she teaches ballet and contemporary for all ages, bringing international performance rigour, musicality, and a warm, encouraging spirit to her classes.</p>
+        </div>
+      </div>
+      <div class="teacher-row reveal reveal-delay-4">
+        <img class="teacher-row-photo" src="assets/teacher-talli.jpg" alt="Talli Levin" style="object-position: 40% 35%;">
+        <div>
+          <div class="teacher-row-name">Talli Levin</div>
+          <div class="teacher-row-role"></div>
+          <p class="teacher-row-bio">Talli approaches dance education through the lens of an early childhood specialist. Joining the team as a locum from 2027, she combines Royal Academy of Dance (RAD) teacher training with her credentials as a qualified nursery school educator. Having taught ballet since 2020, she aligns classical training directly with children’s cognitive and gross motor milestones thus ensuring foundational technique, coordination, and musicality are taught in an engaging, developmentally tailored way.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="testimonials-section" id="testimonials">
+  <div class="testimonials-bg"></div>
+  <div class="testimonials-inner">
+    <div class="testimonials-heading-col reveal">
+      <div class="section-eyebrow" style="color:var(--cherry);">Kind words</div>
+      <div class="testimonials-script">What People Say</div>
+    </div>
+    <div class="testimonials-list">
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-mark">"</div>
+        <p class="testimonial-text">I have not one, not two, but three of my kids enrolled at Bloom currently. Each child is so different and yet each child gets what they need and just loves the classes! What I love is that the teachers create a safe, happy place for them to explore their creativity, learn a beautiful skill and also get so fit! Kim and Ipeleng take the time to show each child individual attention. Nurture, love, fun, creativity. What more could you ask for in a dance studio!</p>
+        <div class="testimonial-author">— Thalia Holmes, mother of Scarlett, Ava &amp; Amelia at Bloom Craighall</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-mark">"</div>
+        <p class="testimonial-text" style="margin-bottom: 10px;">Our two kids have danced with Kim since she made those awesomely creative online dance videos for small kiddies during COVID. While we were all feeling glum and trapped, a new video would be released and joy, fun and creativity would reign again with kids doing spaghetti legs and swimming in the imaginary sea on our lounge floor!</p>
+        <p class="testimonial-text" style="margin-bottom: 10px;">They have been doing RAD Ballet since 2024 and while the form requires conservative technique - joy is still the baseline. They are building transferable life skills like confidence, dedication, performance and cognitive prowess - their brains are exercising so much!</p>
+        <p class="testimonial-text" style="margin-bottom: 10px;">All this happy learning would not be possible without teachers who lead with kindness. They are the talented bunch who you will have the pleasure of working with if you choose the BLOOM dance journey.</p>
+        <p class="testimonial-text">Thank You, Kim, Ips and Jo!</p>
+        <div class="testimonial-author">— Tracy Coville, mother of Isla and Toby at Bloom Craighall</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-3">
+        <div class="testimonial-mark">"</div>
+        <p class="testimonial-text">Over the years I have seen firsthand the positive impact Bloom Ballet specifically has on my school learners. They are kind, respectful, hardworking and display wonderful discipline both inside and outside the classroom. Teacher Jo and Kim have clearly taught perseverance, self-control, grace and dedication over the years and they stand out and SHINE. Keep doing what you are doing!</p>
+        <div class="testimonial-author">— Alice Collins, Grade 4 teacher at Bloom Parkview Senior</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-4">
+        <div class="testimonial-mark">"</div>
+        <p class="testimonial-text" style="margin-bottom: 10px;">Bloom Dance has been teaching dance at my school for the past few years, and what we value so deeply is the beautiful balance they strike between teaching real dance skills - with the repetition and practice that any art language requires- while still holding onto the magic of childhood.</p>
+        <p class="testimonial-text" style="margin-bottom: 10px;">In their classes, children are learning core technique always but they are invited to imagine, create, and become tall trees, or butterflies, and storytellers through movement.</p>
+        <p class="testimonial-text" style="margin-bottom: 10px;">The teachers hold calm, firm boundaries. There is a deep respect for children in the way they teach, and the atmosphere is consistently joyful, nurturing, and full of wonder.</p>
+        <p class="testimonial-text">Dance is such an underrated form of expression for preschool children, and Bloom truly understands how to honour both the artistry of dance and the spirit of childhood.</p>
+        <div class="testimonial-author">— Lindi Bell, headmistress of Small World School</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VENUES ═══ -->
+<section class="venues-section" id="venues">
+  <div class="venues-inner">
+    <div class="section-eyebrow reveal">Where we dance</div>
+    <div class="section-script-title reveal reveal-delay-1">Venues</div>
+    <div class="venue-group-title">STUDIO SPACES</div>
+    <div class="venues-grid">
+        <button type="button" class="venue-card venue-studio" data-venue="1"><span class="venue-num">1</span><span class="venue-text"><span class="venue-name">Bloom Dance Studio @ Parkview Junior</span><span class="venue-addr">1 Ennis Road, Parkview</span></span></button>
+        <button type="button" class="venue-card venue-studio" data-venue="2"><span class="venue-num">2</span><span class="venue-text"><span class="venue-name">Bloom Dance Studio @ Parkview Senior</span><span class="venue-addr">Cnr Dundalk &amp; Dee St, Parkview</span></span></button>
+        <button type="button" class="venue-card venue-studio" data-venue="3"><span class="venue-num">3</span><span class="venue-text"><span class="venue-name">Bloom Dance Studio @ Craighall Primary</span><span class="venue-addr">41 Rothesay Ave, Craighall Park</span></span></button>
+    </div>
+    <div class="venue-group-title">Preschools</div>
+    <div class="venues-grid">
+        <button type="button" class="venue-card venue-pre" data-venue="4"><span class="venue-num">4</span><span class="venue-text"><span class="venue-name">Little Buckingham</span><span class="venue-addr">99 Buckingham Ave, Craighall Park</span></span></button>
+        <button type="button" class="venue-card venue-pre" data-venue="5"><span class="venue-num">5</span><span class="venue-text"><span class="venue-name">Little Star Montessori</span><span class="venue-addr">57 15th Street, Parkhurst</span></span></button>
+        <button type="button" class="venue-card venue-pre" data-venue="6"><span class="venue-num">6</span><span class="venue-text"><span class="venue-name">Mina Lopato</span><span class="venue-addr">7A Chester Road, Greenside East</span></span></button>
+        <button type="button" class="venue-card venue-pre" data-venue="7"><span class="venue-num">7</span><span class="venue-text"><span class="venue-name">Small World</span><span class="venue-addr">36 Fairbridge Road, Roosevelt Park</span></span></button>
+        <button type="button" class="venue-card venue-pre" data-venue="8"><span class="venue-num">8</span><span class="venue-text"><span class="venue-name">Fleming</span><span class="venue-addr">62 Buckingham Ave, Craighall Park</span></span></button>
+        <button type="button" class="venue-card venue-pre" data-venue="9"><span class="venue-num">9</span><span class="venue-text"><span class="venue-name">Little Warthogs</span><span class="venue-addr">8th Street, Parkhurst</span></span></button>
+    </div>
+    <div class="venues-map" id="venuesMap"></div>
+  </div>
+</section>
+<script>
+(function(){
+  const venues = [["Bloom Dance Studio @ Parkview Junior",-26.161,28.0262,"studio"],["Bloom Dance Studio @ Parkview Senior",-26.1628,28.0302,"studio"],["Bloom Dance Studio @ Craighall Primary",-26.1257,28.0247,"studio"],["Little Buckingham",-26.1238,28.0306,"pre"],["Little Star Montessori",-26.1393,28.0171,"pre"],["Mina Lopato",-26.1488,28.0302,"pre"],["Small World",-26.1527,27.9906,"pre"],["Fleming",-26.1262,28.0284,"pre"],["Little Warthogs",-26.1428,28.0185,"pre"]];
+  function init(){
+    if(!window.L){ return setTimeout(init,100); }
+    const map = L.map('venuesMap',{scrollWheelZoom:false});
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',maxZoom:19}).addTo(map);
+    const markers = venues.map((v,i)=>{
+      const icon = L.divIcon({className:'venue-pin venue-pin-'+v[3],html:'<span>'+(i+1)+'</span>',iconSize:[30,30],iconAnchor:[15,15]});
+      return L.marker([v[1],v[2]],{icon}).addTo(map).bindPopup('<strong>'+v[0]+'</strong>');
+    });
+    map.fitBounds(L.latLngBounds(venues.map(v=>[v[1],v[2]])),{padding:[40,40]});
+    const cards = document.querySelectorAll('.venue-card');
+    function select(i){
+      cards.forEach(c=>c.classList.toggle('active', +c.dataset.venue===i+1));
+      map.flyTo(markers[i].getLatLng(), 15, {duration:.6});
+      markers[i].openPopup();
+    }
+    cards.forEach(c=>c.addEventListener('click',()=>select(+c.dataset.venue-1)));
+    markers.forEach((m,i)=>m.on('click',()=>cards.forEach(c=>c.classList.toggle('active', +c.dataset.venue===i+1))));
+  }
+  init();
+})();
+</script>
+
+<!-- ═══ ENROL CTA ═══ -->
+<section class="cta-section" id="enrol">
+  <div class="cta-bg"></div>
+  <div class="cta-inner">
+    <div class="cta-script reveal">Grow with us.</div>
+    <p class="cta-tagline reveal reveal-delay-1">Ready to bloom? Enrolments are open now.</p>
+    <div class="cta-actions reveal reveal-delay-2">
+      <a class="btn btn-white-outline btn-lg" href="https://wa.me/27829099079?text=Hi%20Bloom%2C%20I%27d%20like%20to%20find%20out%20more%20about%20your%20classes" target="_blank" rel="noopener">CONTACT US</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-col-title">MENU</div>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#team">Our Classes</a></li>
+        <li><a href="#classes">Our Teaching Team</a></li>
+        <li><a href="#enrol">What People Say</a></li>
+        <li><a href="#venues">Venues</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="https://wa.me/27829099079" target="_blank" rel="noopener">WhatsApp Kim Taylor</a></li>
+        <li><a href="https://wa.me/27829099079" target="_blank" rel="noopener">+27 82 909 9079</a></li>
+        <li style="margin-top:16px;">@bloomdancestudio</li>
+      </ul>
+    </div>
+    <div class="footer-brand">
+      <img class="footer-logo-img" src="assets/cherry-logo-transparent.png" alt="Bloom Dance Studio">
+      <p class="footer-desc">Where every dancer blooms.<br>Classes for all ages, all levels.<br>Johannesburg, South Africa.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Bloom Dance Studio. All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/bloomdancestudio_sa" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="https://www.facebook.com/bloomdancestudiosa/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8.2h2.76l.41-3.2H13.5V7.55c0-.92.26-1.55 1.58-1.55h1.69V3.14A22.7 22.7 0 0 0 14.31 3c-2.44 0-4.11 1.49-4.11 4.22V9.6H7.44v3.2H10.2V21h3.3Z"/></svg></a>
+      <a href="https://www.youtube.com/@bloomdancestudio_sa" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.27 5 12 5 12 5s-6.27 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.76 1.77C5.73 19 12 19 12 19s6.27 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15V9l5.2 3L10 15Z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAV: appear after scrolling past hero ──────────────
+const nav = document.getElementById('siteNav');
+const burger = document.getElementById('navBurger');
+const mobileMenu = document.getElementById('mobileMenu');
+function setMenu(open){ burger.classList.toggle('open',open); mobileMenu.classList.toggle('open',open); burger.setAttribute('aria-expanded',open); burger.setAttribute('aria-label',open?'Close menu':'Open menu'); }
+burger.addEventListener('click',()=>setMenu(!mobileMenu.classList.contains('open')));
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+const hero = document.querySelector('.hero');
+
+function onScroll() {
+  const heroH = hero ? hero.offsetHeight : window.innerHeight;
+  if (window.scrollY > heroH * 0.65) {
+    nav.classList.add('visible');
+  } else {
+    nav.classList.remove('visible');
+    const mm = document.getElementById('mobileMenu'), nb = document.getElementById('navBurger');
+    if (mm && mm.classList.contains('open')) { mm.classList.remove('open'); if (nb) { nb.classList.remove('open'); nb.setAttribute('aria-expanded','false'); } }
+  }
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// ── REVEAL on scroll ───────────────────────────────────
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+);
+reveals.forEach(el => revealObs.observe(el));
+
+// ── Smooth scroll for nav links ─────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = nav.offsetHeight + 12;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+<div id="bloom-tweaks-mount"></div>
+
+</body>
+</html>
