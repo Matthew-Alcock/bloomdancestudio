@@ -1014,6 +1014,46 @@ body::before {
   #classes .teacher-row .class-bubble-badge { margin: 8px 0 4px !important; }
   .teacher-row-bio { font-size: 14.5px; line-height: 1.75; max-width: 34ch; text-wrap: pretty; margin-top: 22px; }
 }
+
+/* ══════════════════════════════════════
+   ACCESSIBILITY & READABILITY
+══════════════════════════════════════ */
+.skip-link { position: absolute; left: 12px; top: -60px; z-index: 1000; background: #670626; color: #FAF6F0; padding: 10px 18px; border-radius: 999px; font: 600 14px var(--font-body); text-decoration: none; }
+.skip-link:focus { top: 12px; }
+a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offset: 3px; border-radius: 6px; }
+
+/* Even line lengths for the About heading (avoids a lone 'bloom.') */
+.about-text-col .section-script-title { text-wrap: balance; }
+
+/* Body copy: comfortable reading size */
+.teacher-row-bio { font-size: 15px; line-height: 1.7; }
+/* Small labels: never below 12px */
+.section-eyebrow { font-size: 12px; }
+.class-bubble-badge { font-size: 11.5px; }
+.hero-scroll-hint span { font-size: 12px; }
+.testimonial-author { font-size: 13.5px; }
+/* Venues: all card text in Open Sans, larger address */
+.venue-name { font-family: var(--font-body); font-size: 16px; font-weight: 600; }
+.venue-addr { font-size: 14px; opacity: 1; color: #7a3a4f; }
+.venue-group-title { font-size: 12.5px; }
+/* Footer */
+.footer-col-title { font-size: 12px; }
+.footer-links li, .footer-links a { font-size: 15px; }
+.footer-links a { display: inline-block; padding: 4px 0; }
+.nav-links a { display: inline-block; padding: 4px 0; }
+.footer-desc { font-size: 15px; }
+.footer-copy { font-size: 13px; }
+
+@media (max-width: 640px) {
+  .teacher-row-bio { font-size: 15.5px; }
+}
+
+/* Respect visitors who turn off animations */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
 </style>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -1023,6 +1063,7 @@ body::before {
 <body>
 
 <!-- ═══ NAV (hidden until scroll) ═══ -->
+<a class="skip-link" href="#main">Skip to content</a>
 <nav class="site-nav" id="siteNav">
   <a class="nav-logo" href="#top">
     <img src="assets/cherry-logo-transparent.png" alt="Bloom Dance Studio">
@@ -1037,7 +1078,7 @@ body::before {
   <a class="nav-cta" href="https://wa.me/27829099079?text=Hi%20Bloom%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class" target="_blank" rel="noopener">Book a free trial</a>
   <button class="nav-burger" id="navBurger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile menu">
   <a href="#about">ABOUT US</a>
   <a href="#classes">OUR CLASSES</a>
   <a href="#team">OUR TEACHING TEAM</a>
@@ -1046,18 +1087,13 @@ body::before {
   <a class="mobile-cta" href="https://wa.me/27829099079?text=Hi%20Bloom%2C%20I%27d%20like%20to%20book%20a%20free%20trial%20class" target="_blank" rel="noopener">Book a free trial</a>
 </div>
 
+<main id="main">
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="top">
   <div class="hero-bg"></div>
-  <div class="hero-contact-bar">
-    <a href="tel:+27829099079">
-</a>
-    <span>·</span>
-
-  </div>
   <div class="hero-content">
     <div class="hero-welcome" style="font-family: var(--font-script); font-style: normal; font-size: 42px">Welcome to</div>
-    <div class="hero-logo">
+    <div class="hero-logo" role="heading" aria-level="1">
       <img src="assets/bloom-logo-pdf-transparent.png" alt="Bloom Dance Studio">
     </div>
   
@@ -1080,7 +1116,7 @@ body::before {
     </div>
     <div class="about-text-col reveal reveal-delay-1">
       <div class="section-eyebrow">About Us</div>
-      <div class="section-script-title" style="font-size:62px; color:var(--cherry); font-family: var(--font-script); font-style: normal; font-weight: normal;"><span style="font-size: 46px; font-style: italic;">Where every dancer can bloom.</span></div>
+      <div role="heading" aria-level="2" class="section-script-title" style="font-size:62px; color:var(--cherry); font-family: var(--font-script); font-style: normal; font-weight: normal;"><span style="font-size: 46px; font-style: italic;">Where every dancer can bloom.</span></div>
       <div class="about-body"><p dir="ltr">At <b>Bloom Dance Studio</b> we offer a lifelong dance education, from childhood through adolescence into adulthood. The journey begins with a simple intention: to create an environment where dancers fall in love with dance. The love of dance is what draws them back through the studio door, week after week, year after year. Over time, discipline and devotion deepen, technical excellence takes root, and every dancer has the opportunity to flourish.</p></div>
     </div>
   </div>
@@ -1091,13 +1127,13 @@ body::before {
   <div class="team-inner">
     <div class="team-heading-col reveal">
       <div class="section-eyebrow">What we offer</div>
-      <div class="team-script">Classes for all</div>
+      <div role="heading" aria-level="2" class="team-script">Classes for all</div>
     </div>
     <div class="team-cards-col">
       <div class="teacher-row reveal reveal-delay-1">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/mini-and-me-new.webp" alt="Mini & Me" style="object-position: 52% 60%;">
         <div>
-          <div class="teacher-row-name" style="color: #670626;">Mini &amp; Me</div>
+          <div role="heading" aria-level="3" class="teacher-row-name" style="color: #670626;">Mini &amp; Me</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">18 MONTHS TO 3 YEARS OLD</span>
           <p class="teacher-row-bio" style="color: #670626;">This is a gentle first step into dance class that is shared with a parent, guardian or loved one. Through creative play, you explore musicality and the basic foundations of dance with your little one. A time to bond, be a bit silly, and most importantly, encourage their budding love of dance.</p>
         </div>
@@ -1105,7 +1141,7 @@ body::before {
       <div class="teacher-row reveal reveal-delay-2">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/little-blooms-circle.webp" alt="Little Blooms" style="object-position: 50% 46%;">
         <div>
-          <div class="teacher-row-name" style="color: #670626;">Little Blooms</div>
+          <div role="heading" aria-level="3" class="teacher-row-name" style="color: #670626;">Little Blooms</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">2 to 5 years old</span>
           <p class="teacher-row-bio" style="color: #670626;">Inspired by the RAD <b>Dance to Your Own Tune</b> framework, these classes use imaginative storytelling to develop vital social and physical skills. Children develop motor control, balance, coordination, and spatial awareness while learning to interpret rhythm and tempo. Prioritising creative physical discovery over rigid form from the outset, these classes build a solid base for all future dance training.</p>
         </div>
@@ -1113,7 +1149,7 @@ body::before {
       <div class="teacher-row reveal reveal-delay-3">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/ballet-circle.webp" alt="Ballet" style="object-position: 50% 52%;">
         <div>
-          <div class="teacher-row-name" style="color: #670626;">Ballet</div>
+          <div role="heading" aria-level="3" class="teacher-row-name" style="color: #670626;">Ballet</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">RAD Pre-Primary to Advanced 2</span>
           <p class="teacher-row-bio" style="color: #670626;">Our ballet classes follow the <b>Royal Academy of Dance</b> syllabus, an internationally recognised curriculum that has set the standard for classical training for over a century. With a focus on building confidence, technical artistry and performance quality, we follow a pace that suits each dancer while giving them the opportunity to take part in assessments as well as festivals, competitions and shows.</p>
         </div>
@@ -1121,7 +1157,7 @@ body::before {
       <div class="teacher-row reveal reveal-delay-4">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/contemporary-circle.webp" alt="Contemporary" style="object-position: 50% 52%;">
         <div>
-          <div class="teacher-row-name" style="color: #670626;">Contemporary</div>
+          <div role="heading" aria-level="3" class="teacher-row-name" style="color: #670626;">Contemporary</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">Children and Adults</span>
           <p class="teacher-row-bio" style="color: #670626;">A natural partner to ballet, contemporary dance is expressive, grounded and versatile. Classes explore floor work, release and momentum, the use of breath and weight, all building strength and fluidity while giving each dancer room to find their own way of moving. Those who wish can perform contemporary work at festivals, competitions and concerts.</p>
         </div>
@@ -1147,13 +1183,13 @@ body::before {
   <div class="team-inner">
     <div class="team-heading-col reveal">
       <div class="section-eyebrow">The people behind the magic</div>
-      <div class="team-script">Teaching Team</div>
+      <div role="heading" aria-level="2" class="team-script">Teaching Team</div>
     </div>
     <div class="team-cards-col">
       <div class="teacher-row reveal reveal-delay-1">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-kim.jpg" alt="Kim" style="object-position: 28% 32%; transform: scaleX(-1);">
         <div>
-          <div class="teacher-row-name">Kim Taylor</div>
+          <div role="heading" aria-level="3" class="teacher-row-name">Kim Taylor</div>
           <div class="teacher-row-role"></div>
           <p class="teacher-row-bio">As founder and studio principal since 2018, Kim serves as your primary contact. Bringing a strong academic and creative streak, she pairs qualifications in RAD Ballet and AIDT Modern dance with a university background in physical theatre, psychology, and marketing. Her teaching philosophy centres on play, prioritising creativity, musicality and body positivity from an early age.</p>
         </div>
@@ -1161,7 +1197,7 @@ body::before {
       <div class="teacher-row reveal reveal-delay-2">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-ipeleng.jpg" alt="Ipeleng" style="object-position: 50% 32%; transform: scaleX(-1);">
         <div>
-          <div class="teacher-row-name">Ipeleng Derby</div>
+          <div role="heading" aria-level="3" class="teacher-row-name">Ipeleng Derby</div>
           <div class="teacher-row-role"></div>
           <p class="teacher-row-bio">Ipeleng joined the studio in 2020, teaching ballet and contemporary for all ages across multiple venues. A graduate of the Cape Academy of Performing Arts, she has toured globally with the Cape Dance Company and Dada Masilo, and sits on the board of Cape Ballet Africa. Qualified in RAD Ballet and completing her Pilates certification, she pairs elite performance experience with a warm and encouraging teaching style.</p>
         </div>
@@ -1169,7 +1205,7 @@ body::before {
       <div class="teacher-row reveal reveal-delay-3">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-joanne.jpg" alt="Joanne" style="object-position: 38% 42%;">
         <div>
-          <div class="teacher-row-name">Joanne Dieckmann</div>
+          <div role="heading" aria-level="3" class="teacher-row-name">Joanne Dieckmann</div>
           <div class="teacher-row-role"></div>
           <p class="teacher-row-bio">Joanne joined the studio in 2020, bringing more than three decades of dance education experience to the team. Mentored by Yvonne Adkins (ARAD) of the Royal Ballet School, she has taught the full RAD syllabus from Pre-Primary through Advanced 2 since 1987, alongside credentials in the Vaganova-based BC programme and AIDT Modern. A recipient of the AAB Performance Award for 25 years of service, she focuses on senior students, balancing technical discipline with helping dancers discover their artistic voice.</p>
         </div>
@@ -1177,7 +1213,7 @@ body::before {
       <div class="teacher-row reveal reveal-delay-4">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-pascale.jpg" alt="Pascale" style="object-position: 65% 45%;">
         <div>
-          <div class="teacher-row-name">Pascale Verolini</div>
+          <div role="heading" aria-level="3" class="teacher-row-name">Pascale Verolini</div>
           <div class="teacher-row-role"></div>
           <p class="teacher-row-bio">Pascale joined the team in 2026. She has worked as a locum RAD teacher for Bloom, and her primary focus is now studio administrative support. Backed by international teaching experience across South Africa and the UAE, and Southdowns College Dance Honours training, she brings first-hand syllabus knowledge and dancer-led insight to our day-to-day operations.</p>
         </div>
@@ -1185,7 +1221,7 @@ body::before {
       <div class="teacher-row reveal reveal-delay-4">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-rorisang.jpg" alt="Rorisang Motuba" style="object-position: 35% 40%;">
         <div>
-          <div class="teacher-row-name">Rorisang Motuba</div>
+          <div role="heading" aria-level="3" class="teacher-row-name">Rorisang Motuba</div>
           <div class="teacher-row-role"></div>
           <p class="teacher-row-bio">Rorisang joined the team in 2026 to lead children’s creative movement across our partner preschools. A lifelong friend of Kim, she is a formally trained actor, writer, and director who studied at UCT, graduated <i>magna cum laude</i> from the New York Film Academy, and trained at the Baron/Brown Studio. Drawing on lead roles at the Market Theatre, she brings professional expertise in spatial awareness, physical expression, and storytelling to young performers.</p>
         </div>
@@ -1193,7 +1229,7 @@ body::before {
       <div class="teacher-row reveal reveal-delay-4">
         <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-tamlyn-hq.jpg" alt="Tamlyn" style="object-position: center;">
         <div>
-          <div class="teacher-row-name">Tamlyn Preston</div>
+          <div role="heading" aria-level="3" class="teacher-row-name">Tamlyn Preston</div>
           <div class="teacher-row-role"></div>
           <p class="teacher-row-bio">Joining the studio in 2026, Tamlyn began her training in Johannesburg before heading to the UK to study at KS Dance, going on to perform across Europe with Étoile Ballet Theatre in Italy and EBB Junior Ballet in France. Holder of the Enrico Cecchetti Final Diploma and an ISTD Diploma in Dance Education, she draws on her stage experience to help dancers of every level find confidence, precision and joy in both ballet and contemporary.</p>
         </div>
@@ -1208,7 +1244,7 @@ body::before {
   <div class="testimonials-inner">
     <div class="testimonials-heading-col reveal">
       <div class="section-eyebrow" style="color:var(--cherry);">Kind words</div>
-      <div class="testimonials-script">What People Say</div>
+      <div role="heading" aria-level="2" class="testimonials-script">What People Say</div>
     </div>
     <div class="testimonials-list">
       <div class="testimonial-card reveal reveal-delay-1">
@@ -1245,14 +1281,14 @@ body::before {
 <section class="venues-section" id="venues">
   <div class="venues-inner">
     <div class="section-eyebrow reveal">Where we dance</div>
-    <div class="section-script-title reveal reveal-delay-1">Venues</div>
-    <div class="venue-group-title">STUDIO SPACES</div>
+    <div role="heading" aria-level="2" class="section-script-title reveal reveal-delay-1">Venues</div>
+    <div role="heading" aria-level="3" class="venue-group-title">STUDIO SPACES</div>
     <div class="venues-grid">
         <button type="button" class="venue-card venue-studio" data-venue="1"><span class="venue-num">1</span><span class="venue-text"><span class="venue-name">Bloom Dance Studio @ Parkview Junior</span><span class="venue-addr">1 Ennis Road, Parkview</span></span></button>
         <button type="button" class="venue-card venue-studio" data-venue="2"><span class="venue-num">2</span><span class="venue-text"><span class="venue-name">Bloom Dance Studio @ Parkview Senior</span><span class="venue-addr">Cnr Dundalk &amp; Dee St, Parkview</span></span></button>
         <button type="button" class="venue-card venue-studio" data-venue="3"><span class="venue-num">3</span><span class="venue-text"><span class="venue-name">Bloom Dance Studio @ Craighall Primary</span><span class="venue-addr">41 Rothesay Ave, Craighall Park</span></span></button>
     </div>
-    <div class="venue-group-title">Preschools</div>
+    <div role="heading" aria-level="3" class="venue-group-title">Preschools</div>
     <div class="venues-grid">
         <button type="button" class="venue-card venue-pre" data-venue="4"><span class="venue-num">4</span><span class="venue-text"><span class="venue-name">Little Buckingham</span><span class="venue-addr">99 Buckingham Ave, Craighall Park</span></span></button>
         <button type="button" class="venue-card venue-pre" data-venue="5"><span class="venue-num">5</span><span class="venue-text"><span class="venue-name">Little Star Montessori</span><span class="venue-addr">57 15th Street, Parkhurst</span></span></button>
@@ -1293,13 +1329,15 @@ body::before {
 <section class="cta-section" id="enrol">
   <div class="cta-bg"></div>
   <div class="cta-inner">
-    <div class="cta-script reveal">Grow with us.</div>
+    <div role="heading" aria-level="2" class="cta-script reveal">Grow with us.</div>
     <p class="cta-tagline reveal reveal-delay-1">Ready to bloom? Enrolments are open now.</p>
     <div class="cta-actions reveal reveal-delay-2">
       <a class="btn btn-white-outline btn-lg" href="https://wa.me/27829099079?text=Hi%20Bloom%2C%20I%27d%20like%20to%20find%20out%20more%20about%20your%20classes" target="_blank" rel="noopener">CONTACT US</a>
     </div>
   </div>
 </section>
+
+</main>
 
 <!-- ═══ FOOTER ═══ -->
 <footer>
