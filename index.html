@@ -750,6 +750,22 @@ body {
 .cta-bg::after {
   content: none;
 }
+
+/* ── WATERCOLOUR CONTRAST (middle ground) ─────────────────────────────
+   Light wine-tinted layer over the hero and "Grow with us" watercolours,
+   plus a soft shadow behind the white text, so it stays readable.
+   To revert: delete this whole block. ─────────────────────────────── */
+.hero-bg::after, .cta-bg::after {
+  content: '' !important; position: absolute; inset: 0;
+  background: rgba(70,10,30,.13); pointer-events: none;
+}
+.hero-btns .btn, .hero-welcome, .hero-scroll-hint, .cta-tagline, .cta-section .btn, .cta-script {
+  text-shadow: 0 1px 2px rgba(60,8,24,.55), 0 0 14px rgba(60,8,24,.45);
+}
+.hero-btns .btn, .cta-section .btn {
+  box-shadow: 0 0 18px rgba(60,8,24,.25), inset 0 0 18px rgba(60,8,24,.18);
+}
+/* ── END WATERCOLOUR CONTRAST ── */
 .cta-inner {
   position: relative;
   z-index: 1;
