@@ -953,16 +953,56 @@ body::before {
   pointer-events: none;
   z-index: 0;
 }
+
+/* ── Look previously applied at load by bloom-tweaks.jsx (Garden / Watercolour / Script) ── */
+:root { --texture-opacity: 0.11; }
+.classes-bg { opacity: 1; }
+.team-section-bg, .testimonials-bg { opacity: 0.55; }
+.about-watercolor-blob { opacity: 0.385; }
+.section-script-title, .cta-script, .team-script, .testimonials-script,
+.class-bubble-name, .teacher-row-name {
+  font-family: var(--font-script) !important; font-style: normal !important; font-weight: normal !important;
+}
+.about-signature { font-family: var(--font-script) !important; font-style: italic !important; font-size: 46px !important; }
+
+/* ── Mobile: stacked profile & class cards ── */
+@media (max-width: 640px) {
+  .team-inner { padding: 64px 20px 72px; gap: 36px; }
+  .team-heading-col { text-align: center; align-items: center; }
+  .team-script { font-size: 58px; }
+  .team-cards-col { gap: 96px; padding-top: 72px; }
+  .teacher-row {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0;
+    padding: 0 26px 34px;
+    text-align: center;
+    border-left: none;
+    border-top: 3px solid #D19999;
+    border-radius: 26px;
+    box-shadow: 0 10px 34px rgba(44,30,32,0.09);
+  }
+  .teacher-row:hover { transform: none; box-shadow: 0 10px 34px rgba(44,30,32,0.09); }
+  .teacher-row > div { width: 100%; display: flex; flex-direction: column; align-items: center; }
+  .teacher-row-photo {
+    width: 156px; height: 156px;
+    margin: -78px auto 18px;
+    border: 6px solid #FFFFFF;
+    box-shadow: 0 16px 30px rgba(44,30,32,0.20), 0 4px 10px rgba(44,30,32,0.12);
+  }
+  .teacher-row-name { font-size: clamp(36px, 11vw, 44px); line-height: 1.15 !important; margin-bottom: 4px; }
+  .teacher-row-role:empty { display: none; }
+  #classes .teacher-row .class-bubble-badge { margin: 8px 0 4px !important; }
+  .teacher-row-bio { font-size: 14.5px; line-height: 1.75; max-width: 34ch; text-wrap: pretty; }
+  .teacher-row-bio::before {
+    content: ''; display: block; width: 42px; height: 2px; border-radius: 2px;
+    background: #D19999; margin: 14px auto 16px;
+  }
+}
 </style>
 
-<!-- React + Babel -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="bloom-tweaks.jsx"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#670626"/><text x="50" y="62" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="34" fill="#FAF6F0">B</text></svg></template>
 </head>
 <body>
@@ -1001,7 +1041,7 @@ body::before {
 
   </div>
   <div class="hero-content">
-    <div class="hero-welcome" style="font-family: var(--font-script); font-style: normal; font-size: 60px">Welcome to</div>
+    <div class="hero-welcome" style="font-family: var(--font-script); font-style: normal; font-size: 42px">Welcome to</div>
     <div class="hero-logo">
       <img src="assets/bloom-logo-pdf-transparent.png" alt="Bloom Dance Studio">
     </div>
@@ -1021,7 +1061,7 @@ body::before {
 <section class="about-section" id="about">
   <div class="about-inner">
     <div class="about-img-col reveal">
-      <img class="about-img" src="assets/bloom-icon.png" alt="Bloom Dance Studio illustration">
+      <img loading="lazy" decoding="async" class="about-img" src="assets/bloom-icon.png" alt="Bloom Dance Studio illustration">
     </div>
     <div class="about-text-col reveal reveal-delay-1">
       <div class="section-eyebrow">About Us</div>
@@ -1040,7 +1080,7 @@ body::before {
     </div>
     <div class="team-cards-col">
       <div class="teacher-row reveal reveal-delay-1">
-        <img class="teacher-row-photo" src="assets/mini-and-me-new.jpg" alt="Mini & Me" style="object-position: 52% 60%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/mini-and-me-new.jpg" alt="Mini & Me" style="object-position: 52% 60%;">
         <div>
           <div class="teacher-row-name" style="color: #670626;">Mini &amp; Me</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">18 MONTHS TO 3 YEARS OLD</span>
@@ -1048,7 +1088,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-2">
-        <img class="teacher-row-photo" src="assets/little-blooms-circle.jpg" alt="Little Blooms" style="object-position: 50% 46%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/little-blooms-circle.jpg" alt="Little Blooms" style="object-position: 50% 46%;">
         <div>
           <div class="teacher-row-name" style="color: #670626;">Little Blooms</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">From 2- 5 years old</span>
@@ -1056,7 +1096,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-3">
-        <img class="teacher-row-photo" src="assets/ballet-circle.jpg" alt="Ballet" style="object-position: 50% 52%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/ballet-circle.jpg" alt="Ballet" style="object-position: 50% 52%;">
         <div>
           <div class="teacher-row-name" style="color: #670626;">Ballet</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">RAD Pre-Primary to Advanced 2</span>
@@ -1064,7 +1104,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-4">
-        <img class="teacher-row-photo" src="assets/contemporary-circle.jpg" alt="Contemporary" style="object-position: 50% 52%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/contemporary-circle.jpg" alt="Contemporary" style="object-position: 50% 52%;">
         <div>
           <div class="teacher-row-name" style="color: #670626;">Contemporary</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">Children and Adults</span>
@@ -1096,7 +1136,7 @@ body::before {
     </div>
     <div class="team-cards-col">
       <div class="teacher-row reveal reveal-delay-1">
-        <img class="teacher-row-photo" src="assets/teacher-kim.jpg" alt="Kim" style="object-position: 28% 32%; transform: scaleX(-1);">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-kim.jpg" alt="Kim" style="object-position: 28% 32%; transform: scaleX(-1);">
         <div>
           <div class="teacher-row-name">Kim Taylor</div>
           <div class="teacher-row-role"></div>
@@ -1104,7 +1144,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-2">
-        <img class="teacher-row-photo" src="assets/teacher-ipeleng.jpg" alt="Ipeleng" style="object-position: 50% 32%; transform: scaleX(-1);">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-ipeleng.jpg" alt="Ipeleng" style="object-position: 50% 32%; transform: scaleX(-1);">
         <div>
           <div class="teacher-row-name">Ipeleng Derby</div>
           <div class="teacher-row-role"></div>
@@ -1112,7 +1152,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-3">
-        <img class="teacher-row-photo" src="assets/teacher-joanne.jpg" alt="Joanne" style="object-position: 38% 42%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-joanne.jpg" alt="Joanne" style="object-position: 38% 42%;">
         <div>
           <div class="teacher-row-name">Joanne Dieckmann</div>
           <div class="teacher-row-role"></div>
@@ -1120,7 +1160,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-4">
-        <img class="teacher-row-photo" src="assets/teacher-pascale.jpg" alt="Pascale" style="object-position: 65% 45%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-pascale.jpg" alt="Pascale" style="object-position: 65% 45%;">
         <div>
           <div class="teacher-row-name">Pascale Verolini</div>
           <div class="teacher-row-role"></div>
@@ -1128,7 +1168,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-4">
-        <img class="teacher-row-photo" src="assets/teacher-rorisang.jpg" alt="Rorisang Motuba" style="object-position: 35% 40%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-rorisang.jpg" alt="Rorisang Motuba" style="object-position: 35% 40%;">
         <div>
           <div class="teacher-row-name">Rorisang Motuba</div>
           <div class="teacher-row-role"></div>
@@ -1136,7 +1176,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-4">
-        <img class="teacher-row-photo" src="assets/teacher-tamlyn-hq.jpg" alt="Tamlyn" style="object-position: center;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-tamlyn-hq.jpg" alt="Tamlyn" style="object-position: center;">
         <div>
           <div class="teacher-row-name">Tamlyn Preston</div>
           <div class="teacher-row-role"></div>
@@ -1144,7 +1184,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-4">
-        <img class="teacher-row-photo" src="assets/teacher-talli.jpg" alt="Talli Levin" style="object-position: 40% 35%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/teacher-talli.jpg" alt="Talli Levin" style="object-position: 40% 35%;">
         <div>
           <div class="teacher-row-name">Talli Levin</div>
           <div class="teacher-row-role"></div>
@@ -1343,7 +1383,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 </script>
 
-<div id="bloom-tweaks-mount"></div>
 
 </body>
 </html>
