@@ -965,6 +965,11 @@ body::before {
 }
 .about-signature { font-family: var(--font-script) !important; font-style: italic !important; font-size: 46px !important; }
 
+/* ── Script headings: room for swashes so Safari doesn't clip them (e.g. the W in "Where every dancer blooms") ── */
+.section-script-title, .team-script, .testimonials-script, .cta-script {
+  padding: 0.1em 0.2em 0.15em; margin-left: -0.2em; margin-right: -0.2em;
+}
+
 /* ── Class photos: transparent cut-outs, no disc/shadow ── */
 #classes .teacher-row-photo { box-shadow: none !important; border-radius: 0; }
 
