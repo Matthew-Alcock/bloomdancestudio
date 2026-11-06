@@ -965,8 +965,8 @@ body::before {
 }
 .about-signature { font-family: var(--font-script) !important; font-style: italic !important; font-size: 46px !important; }
 
-/* ── Class photos: let their white backgrounds blend into the page, no disc/shadow ── */
-#classes .teacher-row-photo { box-shadow: none !important; mix-blend-mode: multiply; }
+/* ── Class photos: transparent cut-outs, no disc/shadow ── */
+#classes .teacher-row-photo { box-shadow: none !important; border-radius: 0; }
 
 /* ── Mobile hero: show the centre of the watercolour, not its left edge ── */
 @media (max-width: 768px) {
@@ -1090,7 +1090,7 @@ body::before {
     </div>
     <div class="team-cards-col">
       <div class="teacher-row reveal reveal-delay-1">
-        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/mini-and-me-new.jpg" alt="Mini & Me" style="object-position: 52% 60%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/mini-and-me-new.webp" alt="Mini & Me" style="object-position: 52% 60%;">
         <div>
           <div class="teacher-row-name" style="color: #670626;">Mini &amp; Me</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">18 MONTHS TO 3 YEARS OLD</span>
@@ -1098,7 +1098,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-2">
-        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/little-blooms-circle.jpg" alt="Little Blooms" style="object-position: 50% 46%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/little-blooms-circle.webp" alt="Little Blooms" style="object-position: 50% 46%;">
         <div>
           <div class="teacher-row-name" style="color: #670626;">Little Blooms</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">From 2- 5 years old</span>
@@ -1106,7 +1106,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-3">
-        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/ballet-circle.jpg" alt="Ballet" style="object-position: 50% 52%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/ballet-circle.webp" alt="Ballet" style="object-position: 50% 52%;">
         <div>
           <div class="teacher-row-name" style="color: #670626;">Ballet</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">RAD Pre-Primary to Advanced 2</span>
@@ -1114,7 +1114,7 @@ body::before {
         </div>
       </div>
       <div class="teacher-row reveal reveal-delay-4">
-        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/contemporary-circle.jpg" alt="Contemporary" style="object-position: 50% 52%;">
+        <img loading="lazy" decoding="async" class="teacher-row-photo" src="assets/contemporary-circle.webp" alt="Contemporary" style="object-position: 50% 52%;">
         <div>
           <div class="teacher-row-name" style="color: #670626;">Contemporary</div>
           <span class="class-bubble-badge" style="background:#670626; color:#FAF6F0; margin-bottom: 10px;">Children and Adults</span>
