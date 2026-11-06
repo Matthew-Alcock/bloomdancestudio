@@ -965,6 +965,11 @@ body::before {
 }
 .about-signature { font-family: var(--font-script) !important; font-style: italic !important; font-size: 46px !important; }
 
+/* ── Script headings: room for swashes so Safari doesn't clip them (e.g. the W in "Where every dancer blooms") ── */
+.section-script-title, .team-script, .testimonials-script, .cta-script {
+  padding: 0.1em 0.2em 0.15em; margin-left: -0.2em; margin-right: -0.2em;
+}
+
 /* ── Class photos: transparent cut-outs, no disc/shadow ── */
 #classes .teacher-row-photo { box-shadow: none !important; border-radius: 0; }
 
@@ -1075,7 +1080,7 @@ body::before {
     </div>
     <div class="about-text-col reveal reveal-delay-1">
       <div class="section-eyebrow">About Us</div>
-      <div class="section-script-title" style="font-size:62px; color:var(--cherry); font-family: var(--font-script); font-style: normal; font-weight: normal;"><span style="font-size: 46px; font-style: italic;">Where every dancer blooms.</span></div>
+      <div class="section-script-title" style="font-size:62px; color:var(--cherry); font-family: var(--font-script); font-style: normal; font-weight: normal;"><span style="font-size: 46px; font-style: italic;">Where every dancer can bloom.</span></div>
       <div class="about-body"><p dir="ltr">At <b>Bloom Dance Studio</b> we offer a lifelong dance education, from childhood through adolescence into adulthood. The journey begins with a simple intention: to create an environment where dancers fall in love with dance. The love of dance is what draws them back through the studio door, week after week, year after year. Over time, discipline and devotion deepen, technical excellence takes root, and every dancer has the opportunity to flourish.</p></div>
     </div>
   </div>
@@ -1319,7 +1324,7 @@ body::before {
     </div>
     <div class="footer-brand">
       <img class="footer-logo-img" src="assets/cherry-logo-transparent.png" alt="Bloom Dance Studio">
-      <p class="footer-desc">Where every dancer blooms.<br>Classes for all ages, all levels.<br>Johannesburg, South Africa.</p>
+      <p class="footer-desc">Where every dancer can bloom.<br>Classes for all ages, all levels.<br>Johannesburg, South Africa.</p>
     </div>
   </div>
   <div class="footer-bottom">
