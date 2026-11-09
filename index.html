@@ -1046,6 +1046,11 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
 /* Small labels: never below 12px */
 .section-eyebrow { font-size: 12px; }
 .class-bubble-badge { font-size: 11.5px; }
+/* Room between the script class name and its age badge, so tails of letters don't touch it */
+#classes .teacher-row .class-bubble-badge { margin-top: 20px !important; }
+@media (max-width: 640px) {
+  #classes .teacher-row .class-bubble-badge { margin-top: 32px !important; }
+}
 .hero-scroll-hint span { font-size: 12px; }
 .testimonial-author { font-size: 13.5px; }
 /* Venues: all card text in Open Sans, larger address */
