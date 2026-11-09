@@ -1070,6 +1070,22 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ── CORAL MENU BAR ───────────────────────────────────────────────────
+   Bright coral menu bar (matched to the landing-page watercolour) with a
+   white logo, white links and burger. To revert: delete this block and
+   change the nav logo back to assets/cherry-logo-transparent.png. ─── */
+.site-nav { background: #E36F5E; border-bottom: none; box-shadow: 0 2px 14px rgba(103,6,38,0.18); }
+.nav-logo img { filter: none; }
+.nav-links a { color: #FFFFFF; font-size: 13px; }
+.nav-links a:hover, .nav-links a.active { color: #670626; }
+.nav-burger span { background: #FFFFFF; }
+.mobile-menu { background: #E36F5E; }
+.mobile-menu a { color: #FFFFFF; border-bottom-color: rgba(255,255,255,0.3); }
+.mobile-menu a:hover { color: #670626; }
+.mobile-menu .mobile-cta { background: #670626; color: #FFFFFF; }
+.site-nav a:focus-visible, .site-nav button:focus-visible, .mobile-menu a:focus-visible { outline-color: #FFFFFF; }
+/* ── END CORAL MENU BAR ── */
 </style>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -1082,7 +1098,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
 <a class="skip-link" href="#main">Skip to content</a>
 <nav class="site-nav" id="siteNav">
   <a class="nav-logo" href="#top">
-    <img src="assets/cherry-logo-transparent.png" alt="Bloom Dance Studio">
+    <img src="assets/bloom-logo-white-nav.png" alt="Bloom Dance Studio">
   </a>
   <ul class="nav-links">
     <li><a href="#about">About Us</a></li>
