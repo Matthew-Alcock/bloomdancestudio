@@ -6,7 +6,7 @@
 <title>Bloom Dance Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=The+Nautigal:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 
 <style>
 @font-face {
@@ -1112,22 +1112,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
   .teacher-row { border-top-color: #CE5243; }
 }
 /* ── END CORAL ACCENTS ── */
-
-/* ── SCRIPT FONT: THE NAUTIGAL ───────────────────────────────────────
-   Headings, class and teacher names use The Nautigal (Google Fonts)
-   instead of Brittany Signature. It's already slanted, so the browser's
-   fake italic on the About heading is switched off.
-   To revert to Brittany: delete this block (Brittany is still loaded). ── */
-:root { --font-script: 'The Nautigal', 'BrittanySignature', cursive; }
-#about .section-script-title span { font-style: normal !important; }
-/* The Nautigal draws smaller than Brittany at the same size: scale it up */
-.section-script-title, .team-script, .testimonials-script, .cta-script,
-.teacher-row-name, .hero-welcome, .about-signature { font-size-adjust: 0.44; }
-@media (max-width: 640px) {
-  .section-script-title, .team-script, .testimonials-script, .cta-script,
-  .teacher-row-name, .hero-welcome, .about-signature { font-size-adjust: 0.38; }
-}
-/* ── END SCRIPT FONT: THE NAUTIGAL ── */
 </style>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
