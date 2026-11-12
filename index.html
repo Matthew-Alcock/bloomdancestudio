@@ -1113,16 +1113,16 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
 
 /* ── TESTIMONIALS CAROUSEL ────────────────────────────────────────────
    Tablets and phones only (960px and below): one testimonial at a time,
-   swipe or use the arrows and dots above. Desktop keeps the stacked list.
+   side-swipe only (no vertical movement, no resizing), or use the arrows
+   and dots above. Desktop keeps the stacked list.
    No autoplay. To revert: revert the PR that added this block. ───── */
 .testimonials-carousel { min-width: 0; }
 .carousel-controls { display: none; }
 @media (max-width: 960px) {
   .testimonials-list {
-    flex-direction: row; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+    flex-direction: row; gap: 20px; overflow-x: auto; overflow-y: hidden; touch-action: pan-x pan-y; scroll-snap-type: x mandatory;
     scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none;
     padding: 6px 4px 22px; margin: -6px -4px 0; align-items: flex-start;
-    transition: height .35s ease;
   }
   .testimonials-list::-webkit-scrollbar { display: none; }
   .testimonials-list:focus-visible { outline: 3px solid #670626; outline-offset: 4px; border-radius: 20px; }
@@ -1434,7 +1434,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
   const go = i => { i = Math.max(0, Math.min(slides.length - 1, i)); track.scrollTo({ left: i * step() }); };
   function update(){
     const i = current();
-    track.style.height = small.matches ? (slides[i].offsetHeight + 28) + 'px' : '';
     dots.forEach((d, k) => d.setAttribute('aria-current', k === i ? 'true' : 'false'));
     prev.disabled = i === 0; next.disabled = i === slides.length - 1;
   }
