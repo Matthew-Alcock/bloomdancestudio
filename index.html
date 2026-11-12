@@ -1142,6 +1142,20 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
 .carousel-dot[aria-current="true"]::before { background: #CE5243; transform: scale(1.25); }
 @media (prefers-reduced-motion: reduce) { .testimonials-list { scroll-behavior: auto; } }
 /* ── END TESTIMONIALS CAROUSEL ── */
+
+/* ── QUOTE BANNER: SPLIT ON SMALLER SCREENS ──────────────────────────
+   768px and below: the banner is cut in two (quote half, then dancers
+   half) and stacked, so the quote stays readable. To revert: delete this
+   block and the two .banner-half divs in the banner markup. ───────── */
+.banner-half { display: none; }
+@media (max-width: 768px) {
+  .dancer-divider { aspect-ratio: auto; height: auto; }
+  .dancer-divider-bg { display: none; }
+  .banner-half { display: block; width: 100%; background: #FAF6F0 center / 100% auto no-repeat; }
+  .banner-half-left  { aspect-ratio: 1185 / 903; background-image: url('assets/quote-banner-v3-left.jpg'); }
+  .banner-half-right { aspect-ratio: 1235 / 845; background-image: url('assets/quote-banner-v3-right.jpg'); }
+}
+/* ── END QUOTE BANNER SPLIT ── */
 </style>
 
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#670626"/><text x="50" y="62" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="34" fill="#FAF6F0">B</text></svg></template>
@@ -1255,6 +1269,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
 <!-- ═══ FULL-BLEED DANCER DIVIDER ═══ -->
 <div class="dancer-divider">
   <div class="dancer-divider-bg" style="opacity: 1"></div>
+  <div class="banner-half banner-half-left" aria-hidden="true"></div>
+  <div class="banner-half banner-half-right" aria-hidden="true"></div>
   <div class="dancer-divider-content">
     <div class="dancer-divider-quote reveal" style="display:none">
       <div class="divider-quote-text" style="color: rgb(139, 0, 0)">A dancer, like a flower, does not bloom in a moment but through determination, constant reaching for light.</div>
