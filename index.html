@@ -1110,6 +1110,38 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
   .teacher-row { border-top-color: #CE5243; }
 }
 /* ── END CORAL ACCENTS ── */
+
+/* ── TESTIMONIALS CAROUSEL ────────────────────────────────────────────
+   Tablets and phones only (960px and below): one testimonial at a time,
+   swipe or use the arrows and dots. Desktop keeps the stacked list.
+   No autoplay. To revert: revert the PR that added this block. ───── */
+.testimonials-carousel { min-width: 0; }
+.carousel-controls { display: none; }
+@media (max-width: 960px) {
+  .testimonials-list {
+    flex-direction: row; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none;
+    padding: 6px 4px 22px; margin: -6px -4px 0; align-items: flex-start;
+    transition: height .35s ease;
+  }
+  .testimonials-list::-webkit-scrollbar { display: none; }
+  .testimonials-list:focus-visible { outline: 3px solid #670626; outline-offset: 4px; border-radius: 20px; }
+  .testimonial-card { flex: 0 0 100%; scroll-snap-align: start; }
+  .testimonial-card:hover { transform: none; }
+  .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 6px; }
+}
+.carousel-btn {
+  width: 44px; height: 44px; border-radius: 50%; border: 2px solid #CE5243; background: #fff; color: #CE5243;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s, color .2s, opacity .2s;
+}
+.carousel-btn:hover:not(:disabled) { background: #CE5243; color: #fff; }
+.carousel-btn:disabled { opacity: .35; cursor: default; }
+.carousel-dots { display: flex; gap: 4px; }
+.carousel-dot { width: 24px; height: 24px; padding: 0; border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.carousel-dot::before { content: ''; width: 9px; height: 9px; border-radius: 50%; background: #E8C4C0; transition: background .2s, transform .2s; }
+.carousel-dot[aria-current="true"]::before { background: #CE5243; transform: scale(1.25); }
+@media (prefers-reduced-motion: reduce) { .testimonials-list { scroll-behavior: auto; } }
+/* ── END TESTIMONIALS CAROUSEL ── */
 </style>
 
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#670626"/><text x="50" y="62" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="34" fill="#FAF6F0">B</text></svg></template>
@@ -1300,13 +1332,14 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
       <div class="section-eyebrow" style="color:var(--cherry);">Kind words</div>
       <div role="heading" aria-level="2" class="testimonials-script">What People Say</div>
     </div>
-    <div class="testimonials-list">
-      <div class="testimonial-card reveal reveal-delay-1">
+    <div class="testimonials-carousel reveal reveal-delay-1" role="region" aria-roledescription="carousel" aria-label="What people say">
+    <div class="testimonials-list" id="testimonialTrack" tabindex="0" aria-live="polite">
+      <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="1 of 4">
         <div class="testimonial-mark">"</div>
         <p class="testimonial-text">I have not one, not two, but three of my kids enrolled at Bloom currently. Each child is so different and yet each child gets what they need and just loves the classes! What I love is that the teachers create a safe, happy place for them to explore their creativity, learn a beautiful skill and also get so fit! Kim and Ipeleng take the time to give each child individual attention. Nurture, love, fun, creativity. What more could you ask for in a dance studio?</p>
         <div class="testimonial-author">Thalia Holmes, mother of Scarlett, Ava &amp; Amelia at Bloom Craighall</div>
       </div>
-      <div class="testimonial-card reveal reveal-delay-2">
+      <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="2 of 4">
         <div class="testimonial-mark">"</div>
         <p class="testimonial-text" style="margin-bottom: 10px;">Our two kids have danced with Kim since she made those awesomely creative online dance videos for small kiddies during COVID. While we were all feeling glum and trapped, a new video would be released and joy, fun and creativity would reign again with kids doing spaghetti legs and swimming in the imaginary sea on our lounge floor!</p>
         <p class="testimonial-text" style="margin-bottom: 10px;">They have been doing RAD Ballet since 2024 and, while the form requires conservative technique, joy is still the baseline. They are building transferable life skills like confidence, dedication, performance and cognitive prowess. Their brains are exercising so much!</p>
@@ -1314,12 +1347,12 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
         <p class="testimonial-text">Thank you, Kim, Ips and Jo!</p>
         <div class="testimonial-author">Tracy Coville, mother of Isla and Toby at Bloom Craighall</div>
       </div>
-      <div class="testimonial-card reveal reveal-delay-3">
+      <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="3 of 4">
         <div class="testimonial-mark">"</div>
         <p class="testimonial-text">Over the years I have seen first-hand the positive impact Bloom Ballet specifically has on my school learners. They are kind, respectful, hardworking and display wonderful discipline both inside and outside the classroom. Teacher Jo and Kim have clearly taught perseverance, self-control, grace and dedication over the years and they stand out and SHINE. Keep doing what you are doing!</p>
         <div class="testimonial-author">Alice Collins, Grade 4 teacher at Bloom Parkview Senior</div>
       </div>
-      <div class="testimonial-card reveal reveal-delay-4">
+      <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="4 of 4">
         <div class="testimonial-mark">"</div>
         <p class="testimonial-text" style="margin-bottom: 10px;">Bloom Dance has been teaching dance at my school for the past few years, and what we value so deeply is the beautiful balance they strike between teaching real dance skills, with the repetition and practice that any art language requires, while still holding onto the magic of childhood.</p>
         <p class="testimonial-text" style="margin-bottom: 10px;">In their classes, children are learning core technique always, but they are invited to imagine, create, and become tall trees, or butterflies, and storytellers through movement.</p>
@@ -1327,6 +1360,21 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
         <p class="testimonial-text">Dance is such an underrated form of expression for preschool children, and Bloom truly understands how to honour both the artistry of dance and the spirit of childhood.</p>
         <div class="testimonial-author">Lindi Bell, headmistress of Small World School</div>
       </div>
+    </div>
+    <div class="carousel-controls">
+      <button type="button" class="carousel-btn" id="testimonialPrev" aria-label="Previous testimonial" disabled>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="carousel-dots" id="testimonialDots">
+        <button type="button" class="carousel-dot" aria-label="Show testimonial 1 of 4" aria-current="true"></button>
+        <button type="button" class="carousel-dot" aria-label="Show testimonial 2 of 4"></button>
+        <button type="button" class="carousel-dot" aria-label="Show testimonial 3 of 4"></button>
+        <button type="button" class="carousel-dot" aria-label="Show testimonial 4 of 4"></button>
+      </div>
+      <button type="button" class="carousel-btn" id="testimonialNext" aria-label="Next testimonial">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
     </div>
   </div>
 </section>
@@ -1353,6 +1401,42 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
     </div>
   </div>
 </section>
+
+<script>
+(function(){
+  const track = document.getElementById('testimonialTrack');
+  if (!track) return;
+  const slides = [...track.children];
+  const dots = [...document.querySelectorAll('#testimonialDots .carousel-dot')];
+  const prev = document.getElementById('testimonialPrev');
+  const next = document.getElementById('testimonialNext');
+  const small = window.matchMedia('(max-width: 960px)');
+  const syncFocus = () => small.matches ? track.setAttribute('tabindex', '0') : track.removeAttribute('tabindex');
+  syncFocus(); small.addEventListener('change', () => { syncFocus(); update(); });
+  const step = () => slides[1].offsetLeft - slides[0].offsetLeft;
+  const current = () => Math.round(track.scrollLeft / step());
+  const go = i => { i = Math.max(0, Math.min(slides.length - 1, i)); track.scrollTo({ left: i * step() }); };
+  function update(){
+    const i = current();
+    track.style.height = small.matches ? (slides[i].offsetHeight + 28) + 'px' : '';
+    dots.forEach((d, k) => d.setAttribute('aria-current', k === i ? 'true' : 'false'));
+    prev.disabled = i === 0; next.disabled = i === slides.length - 1;
+  }
+  prev.addEventListener('click', () => go(current() - 1));
+  next.addEventListener('click', () => go(current() + 1));
+  dots.forEach((d, k) => d.addEventListener('click', () => go(k)));
+  track.addEventListener('keydown', e => {
+    if (!small.matches) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(current() + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(current() - 1); }
+  });
+  let t; track.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(update, 60); }, { passive: true });
+  window.addEventListener('resize', update);
+  window.addEventListener('load', update);
+  if (document.fonts) document.fonts.ready.then(update);
+  update();
+})();
+</script>
 
 <!-- ═══ ENROL CTA ═══ -->
 <section class="cta-section" id="enrol">
