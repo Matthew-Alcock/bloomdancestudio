@@ -1113,20 +1113,20 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
 
 /* ── TESTIMONIALS CAROUSEL ────────────────────────────────────────────
    Tablets and phones only (960px and below): one testimonial at a time,
-   swipe or use the arrows and dots. Desktop keeps the stacked list.
+   changed with the arrows and dots (cards don't drag under a finger). Desktop keeps the stacked list.
    No autoplay. To revert: revert the PR that added this block. ───── */
 .testimonials-carousel { min-width: 0; }
 .carousel-controls { display: none; }
 @media (max-width: 960px) {
   .testimonials-list {
-    flex-direction: row; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
-    scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none;
+    flex-direction: row; gap: 20px; overflow-x: hidden; touch-action: pan-y;
+    scroll-behavior: smooth; scrollbar-width: none;
     padding: 6px 4px 22px; margin: -6px -4px 0; align-items: flex-start;
     transition: height .35s ease;
   }
   .testimonials-list::-webkit-scrollbar { display: none; }
   .testimonials-list:focus-visible { outline: 3px solid #670626; outline-offset: 4px; border-radius: 20px; }
-  .testimonial-card { flex: 0 0 100%; scroll-snap-align: start; }
+  .testimonial-card { flex: 0 0 100%; }
   .testimonial-card:hover { transform: none; }
   .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 6px; }
 }
