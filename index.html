@@ -1113,25 +1113,25 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
 
 /* ── TESTIMONIALS CAROUSEL ────────────────────────────────────────────
    Tablets and phones only (960px and below): one testimonial at a time,
-   changed with the arrows and dots (cards don't drag under a finger). Desktop keeps the stacked list.
+   swipe or use the arrows and dots above. Desktop keeps the stacked list.
    No autoplay. To revert: revert the PR that added this block. ───── */
 .testimonials-carousel { min-width: 0; }
 .carousel-controls { display: none; }
 @media (max-width: 960px) {
   .testimonials-list {
-    flex-direction: row; gap: 20px; overflow-x: hidden; touch-action: pan-y;
-    scroll-behavior: smooth; scrollbar-width: none;
+    flex-direction: row; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-behavior: smooth; overscroll-behavior-x: contain; scrollbar-width: none;
     padding: 6px 4px 22px; margin: -6px -4px 0; align-items: flex-start;
     transition: height .35s ease;
   }
   .testimonials-list::-webkit-scrollbar { display: none; }
   .testimonials-list:focus-visible { outline: 3px solid #670626; outline-offset: 4px; border-radius: 20px; }
-  .testimonial-card { flex: 0 0 100%; }
+  .testimonial-card { flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; }
   .testimonial-card:hover { transform: none; }
-  .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 6px; }
+  .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 0 14px; }
 }
 .carousel-btn {
-  width: 44px; height: 44px; border-radius: 50%; border: 2px solid #CE5243; background: #fff; color: #CE5243;
+  width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #CE5243; background: #fff; color: #CE5243;
   display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s, color .2s, opacity .2s;
 }
 .carousel-btn:hover:not(:disabled) { background: #CE5243; color: #fff; }
@@ -1349,6 +1349,20 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
       <div role="heading" aria-level="2" class="testimonials-script">What People Say</div>
     </div>
     <div class="testimonials-carousel reveal reveal-delay-1" role="region" aria-roledescription="carousel" aria-label="What people say">
+    <div class="carousel-controls">
+      <button type="button" class="carousel-btn" id="testimonialPrev" aria-label="Previous testimonial" disabled>
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="carousel-dots" id="testimonialDots">
+        <button type="button" class="carousel-dot" aria-label="Show testimonial 1 of 4" aria-current="true"></button>
+        <button type="button" class="carousel-dot" aria-label="Show testimonial 2 of 4"></button>
+        <button type="button" class="carousel-dot" aria-label="Show testimonial 3 of 4"></button>
+        <button type="button" class="carousel-dot" aria-label="Show testimonial 4 of 4"></button>
+      </div>
+      <button type="button" class="carousel-btn" id="testimonialNext" aria-label="Next testimonial">
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
     <div class="testimonials-list" id="testimonialTrack" tabindex="0" aria-live="polite">
       <div class="testimonial-card" role="group" aria-roledescription="slide" aria-label="1 of 4">
         <div class="testimonial-mark">"</div>
@@ -1376,20 +1390,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
         <p class="testimonial-text">Dance is such an underrated form of expression for preschool children, and Bloom truly understands how to honour both the artistry of dance and the spirit of childhood.</p>
         <div class="testimonial-author">Lindi Bell, headmistress of Small World School</div>
       </div>
-    </div>
-    <div class="carousel-controls">
-      <button type="button" class="carousel-btn" id="testimonialPrev" aria-label="Previous testimonial" disabled>
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="carousel-dots" id="testimonialDots">
-        <button type="button" class="carousel-dot" aria-label="Show testimonial 1 of 4" aria-current="true"></button>
-        <button type="button" class="carousel-dot" aria-label="Show testimonial 2 of 4"></button>
-        <button type="button" class="carousel-dot" aria-label="Show testimonial 3 of 4"></button>
-        <button type="button" class="carousel-dot" aria-label="Show testimonial 4 of 4"></button>
-      </div>
-      <button type="button" class="carousel-btn" id="testimonialNext" aria-label="Next testimonial">
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
     </div>
     </div>
   </div>
@@ -1446,7 +1446,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid #670626; outline-offs
     if (e.key === 'ArrowRight') { e.preventDefault(); go(current() + 1); }
     if (e.key === 'ArrowLeft') { e.preventDefault(); go(current() - 1); }
   });
-  let t; track.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(update, 60); }, { passive: true });
+  let t; const done = () => { clearTimeout(t); t = setTimeout(update, 120); };
+  track.addEventListener('scroll', done, { passive: true });
+  track.addEventListener('scrollend', update);
   window.addEventListener('resize', update);
   window.addEventListener('load', update);
   if (document.fonts) document.fonts.ready.then(update);
